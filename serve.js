@@ -13,7 +13,7 @@ if (process.argv.length === 3 && process.argv[2] === 'develop') {
   app.use('/app/modelapi/static/', express.static('static', {maxAge: 1}));
   app.use('/app/modelapi/common/', express.static('node_modules/re-common-app', {maxAge: 1}));
 
-  var host = 'https://home.reflective.dk';
+  var host = 'https://test.reflective.dk';
   var client = new Client({ host: host });
   var credentials = {
     username: 'hans.andersen@hjertekoebing.dk',
