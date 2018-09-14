@@ -1,7 +1,7 @@
 {
   "name": "re-modelapi-app",
   "version": "0.1.0",
-  "description": "Reflective Model API Client",
+  "description": "Reflective Model API Browser",
   "main": "index.js",
   "scripts": {
     "build": "rm -Rf ./www-built; node tools/r.js -o tools/build.js",
@@ -28,7 +28,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "re-client": "git+ssh://git@github.com/reflective-dk/re-client.git",
-    "re-common-app": "git+ssh://git@github.com/reflective-dk/re-common-app.git#basekit",
+    "re-common-app": "git+ssh://git@github.com/reflective-dk/re-common-app.git",
     "request": "^2.83.0"
   },
   "devDependencies": {
