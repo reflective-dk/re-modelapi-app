@@ -6,7 +6,7 @@ define([
     };
 
     function fetchResource(path) {
-        console.log('about to fetch', path);
-        return promise.resolve(42);
+        return basekit.fetchResource(path)
+            .catch(function(reason) { return reason.response; });
     }
 });
