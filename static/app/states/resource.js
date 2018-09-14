@@ -41,7 +41,7 @@ define([
         contents.setValue('');
         return situ.fetchResource($$(ids.path).getValue())
             .then(function(resource) {
-                contents.setValue(JSON.stringify(resource));
+                contents.setValue(JSON.stringify(resource, null, 2));
             });
     }
 });
