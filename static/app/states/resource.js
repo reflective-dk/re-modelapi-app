@@ -1,11 +1,15 @@
 define([
-    'webix', 'common/$$', './state-router', '../models/situ'
-], function(webix, $$, stateRouter, situ) {
+    // Note: We deliberately load simple-json-viewer even though it's not used
+    // directly in the code below
+    'webix', 'common/$$', './state-router', '../models/situ', 'common/simple-json-viewer'
+], function(webix, $$, stateRouter, situ, sjv) {
     var ids = {
         path: webix.uid().toString(),
         button: webix.uid().toString(),
         contents: webix.uid().toString()
     };
+    var jsonViewer;
+
     return {
         name: 'app.resource',
         route: '/resource',
@@ -23,8 +27,9 @@ define([
                           inputWidth: 100 },
                         {}
                     ] },
-                    { id: ids.contents,
-                      view: 'textarea' }
+                    { view: 'template',
+                      id: 'json-viewer-webix-view',
+                      template: '<div id="json-viewer"></div>' }
                 ]
             },
             $oninit: init
@@ -34,14 +39,16 @@ define([
     function init() {
         $$(ids.path).attachEvent('onEnter', fetchResource);
         $$(ids.button).attachEvent('onItemClick', fetchResource);
+        // This allows for CSS styling of the container which is required to get scrolling
+        $$('json-viewer-webix-view').getNode().setAttribute('id', 'json-viewer-container');
+        jsonViewer = window.createJSONViewer(document.querySelector('#json-viewer'), []);
     }
 
     function fetchResource() {
-        var contents = $$(ids.contents);
-        contents.setValue('');
+        jsonViewer.changeJSON([]);
         return situ.fetchResource($$(ids.path).getValue())
             .then(function(resource) {
-                contents.setValue(JSON.stringify(resource, null, 2));
+                jsonViewer.changeJSON(resource);
             });
     }
 });
