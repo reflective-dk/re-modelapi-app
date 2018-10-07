@@ -1,7 +1,13 @@
 define([
-    'webix', 'common/$$', 'common/helpers', './state-router', '../models/basekit',
-    'commonViews/nav-menu', 'commonViews/logout-button'
-], function(webix, $$, helpers, stateRouter, basekit, NavMenu, LogoutButton) {
+    'webix', 'common/$$', 'common/helpers', './state-router', '../models/basekit', '../models/situ',
+    '../views/model-menu', 'commonViews/nav-menu', 'commonViews/logout-button'
+], function(webix, $$, helpers, stateRouter, basekit, situ, ModelMenu, NavMenu, LogoutButton) {
+    var modelMenu = new ModelMenu({
+        getConfig: function() {
+            // TODO: get config with one call from service
+            return situ.fetchResource('ro').then(function(ro) { return { ro: ro }; });
+        }
+    });
 
     var navMenu = new NavMenu();
     var logoutButton = new LogoutButton({ callback: '/app/modelapi/' });
@@ -24,7 +30,10 @@ define([
                   { id: 'session', type: 'header', borderless: true, template: '<span class="webix_icon icon fa-user-circle-o big_icon"></span><span class="user">#username#</span>' },
                   logoutButton.ui
               ] },
-            { $subview: true }
+            { cols:[
+                modelMenu.ui,
+                { $subview: true }
+            ]}
         ]
     };
 
@@ -33,20 +42,33 @@ define([
         route: '/app',
         template: {
             $ui: ui,
+            $menu: modelMenu.ids.menu,
             $oninit: init
         },
-        querystringParameters: [ 'id', 'validOn' ],
+        querystringParameters: [ 'model-id', 'valid-on' ],
         activate: function(context) {
-            var validOn = basekit.setValidOn(new Date(context.parameters.validOn));
+            var validOn = basekit.setValidOn(new Date(context.parameters['valid-on']));
             $$('vt').setValue(validOn);
+            modelMenu.onInit(validOn)
+                .then(function(modelIds) {
+                    if (context.parameters['model-id'] && modelIds.indexOf(context.parameters['model-id']) == -1) {
+                        console.log('redirecting to explorer');
+                        stateRouter.go('app.resource',
+                                       { 'valid-on': validOn.toISOString().slice(0,10) });
+                    } else {
+                        modelMenu.selectMenuItem(context.parameters['model-id']);
+                        webix.UIManager.setFocus($$(modelMenu.ids.menu));
+                    }
+                })
+                .fail(console.log);
         }
     };
 
     function init() {
-        $$('vt').attachEvent('onChange', function(value) {
-            var validOn = helpers.dumpTimeZone(value);
-            stateRouter.go(null, // Go to same state with new validOn parameter
-                           { validOn: validOn.toISOString().slice(0,10) },
+        $$('vt').attachEvent('onChange', function(validOn) {
+            validOn.setHours(23, 59, 59, 999);
+            stateRouter.go(null, // Go to same state with new valid-on parameter
+                           { 'valid-on': validOn.toISOString().slice(0,10) },
                            { inherit: true });
         });
         $$('session').parse({ username: basekit.username() });
