@@ -1,6 +1,10 @@
 define([
-    'webix', 'common/$$', 'common/helpers', './state-router', '../models/basekit'
-], function(webix, $$, helpers, stateRouter, basekit) {
+    'webix', 'common/$$', 'common/helpers', './state-router', '../models/basekit',
+    'commonViews/nav-menu', 'commonViews/logout-button'
+], function(webix, $$, helpers, stateRouter, basekit, NavMenu, LogoutButton) {
+
+    var navMenu = new NavMenu();
+    var logoutButton = new LogoutButton({ callback: '/app/modelapi/' });
 
     var ui = {
         rows: [
@@ -8,6 +12,7 @@ define([
               id: 'toolbar',
               hidden: true,
               cols: [
+                  navMenu.ui,
                   { id: 'vt',
                     view: 'datepicker',
                     label: 'Visningstidspunkt:',
@@ -17,6 +22,7 @@ define([
                     format: '%d-%m-%Y' },
                   { gravity: 2 },
                   { id: 'session', type: 'header', borderless: true, template: '<span class="webix_icon icon fa-user-circle-o big_icon"></span><span class="user">#username#</span>' },
+                  logoutButton.ui
               ] },
             { $subview: true }
         ]
@@ -45,5 +51,6 @@ define([
         });
         $$('session').parse({ username: basekit.username() });
 	$$('toolbar').show();
+        navMenu.onInit($$('toolbar').$height);
     }
 });
