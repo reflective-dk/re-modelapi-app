@@ -9,17 +9,13 @@ var app = express();
 app.use(cookieParser());
 var indexpath = path.join(__dirname + '/static/index.html');
 if (process.argv.length === 3 && process.argv[2] === 'develop') {
+  var credentials = require('./credentials.json');
   console.log('running in dev mode');
   app.use('/app/modelapi/static/', express.static('static', {maxAge: 1}));
   app.use('/app/modelapi/common/', express.static('node_modules/re-common-app', {maxAge: 1}));
 
   var host = 'https://test.reflective.dk';
   var client = new Client({ host: host });
-  var credentials = {
-    username: 'hans.andersen@hjertekoebing.dk',
-    password: 'hello',
-    context: {"domain": "hjertekoebing"}
-  };
   app.get('/app/modelapi/', serve_utils.test_token(client, credentials, indexpath));
 
   app.use('/', function(req, res) {

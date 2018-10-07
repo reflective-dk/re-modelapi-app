@@ -2,4 +2,5 @@ www-built
 www-ghpages
 node_modules
 package-lock.json
+credentials.json
 *~
