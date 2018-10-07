@@ -10,32 +10,17 @@
     opacity: 1;
 }
 
-/* Lato font family */
-
-.webix_view, .webix_control, .webix_el_text, .webix_el_text input,
-.webix_inp_label, .webix_control button {
-    font-family: Lato;
-}
-
 /* Colors */
 
-.webixtype_base {
-    background-color: #268bd2;
-}
-
 .webix_layout_toolbar.webix_toolbar {
-    background-color: #586e75;
     font-weight: bold;
 }
 
 .webix_header > div {
-    background-color: #586e75;
     font-weight: bold;
 }
 
 .webix_ss_header TD {
-    background-color: #eee8d5; /* base2 */
-    color: #073642;
     font-weight: bold;
 }
 
@@ -44,53 +29,27 @@
     color: #073642;
 }
 
-.webix_item_tab.webix_selected {
-    background-color: #268bd2;
-}
-
-.webix_cell {
-    background-color: #fff;
-    color: #073642;
-}
-
-.version-number {
-    color: #93a1a1;
-}
-
 .detail-panel, .detail-panel .webix_cell, .detail-panel .webix_view {
-    background-color: #586e75;
-    color: #ddd;
     border: none;
 }
 
 .detail-panel-title, .webix_el_label.detail-panel-title {
-    color: #fff;
     font-weight: bold;
     padding-left: 10px;
 }
 
-.detail-panel-icon {
-    color: #ddd;
-}
-
-.detail-panel .webix_tree_open, .detail-panel .webix_tree_close {
-    color: #ddd;
-}
-
-.content-panel-background .webix_ss_vscroll_header {
-    background-color: #eee8d5; /* base2 */
-}
-
 /*data loading status*/
 .status_good, .status_error, .status_saving{
-	text-align: center;
-	margin-left:-12px;
+    text-align: center;
+    margin-left: -12px;
 }
+
 .status_error{
-	color:red;
+    color: red;
 }
+
 .status_good{
-	color:green;
+    color: green;
 }
 
 /*login form*/
@@ -148,16 +107,14 @@
 .app-left-panel,
 .app-left-panel .webix_view,
 .app-left-panel .webix_menu .webix_list_item{
-    background-color: #073642;
-    color:#ddd;
+    color: #073642;
 }
 .app-left-panel .webix_menu .webix_list_item.webix_selected{
-    background-color: #586e75;
-    color:#ddd;
+    background-color: #ddd;
+    color: #073642;
 }
 .app-left-panel .webix_menu .webix_list_item:hover{
-    background-color: #839496;
-    color:#ddd;
+    color: #073642;
 }
 .app-left-panel .webix_header .webix_template{
     background-color: #073642;
