@@ -1,3 +1,3 @@
-# Reflective Model API Browser #
+# Reflective Model API Explorer #
 
-Test app for browsing the model-specific REST API.
+Test app for exploring the model-specific REST API.

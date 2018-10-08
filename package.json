@@ -1,7 +1,7 @@
 {
   "name": "re-modelapi-app",
   "version": "0.1.0",
-  "description": "Reflective Model API Browser",
+  "description": "Reflective Model API Explorer",
   "main": "index.js",
   "scripts": {
     "build": "rm -Rf ./www-built; node tools/r.js -o tools/build.js",
