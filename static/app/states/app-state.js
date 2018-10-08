@@ -1,11 +1,13 @@
 define([
-    'webix', 'common/$$', 'common/helpers', './state-router', '../models/basekit', '../models/situ',
-    '../views/model-menu', 'commonViews/nav-menu', 'commonViews/logout-button'
-], function(webix, $$, helpers, stateRouter, basekit, situ, ModelMenu, NavMenu, LogoutButton) {
+    'webix', 'common/promise', 'common/$$', 'common/helpers', './state-router',
+    '../models/basekit', '../models/situ', '../views/model-menu',
+    'commonViews/nav-menu', 'commonViews/logout-button'
+], function(webix, promise, $$, helpers, stateRouter, basekit, situ,
+            ModelMenu, NavMenu, LogoutButton) {
     var modelMenu = new ModelMenu({
         getConfig: function() {
-            // TODO: get config with one call from service
-            return situ.fetchResource('ro').then(function(ro) { return { ro: ro }; });
+            // TODO: get config with call from service
+            return promise.resolve({ ro: 'ro', aau: 'aau' });
         }
     });
 
