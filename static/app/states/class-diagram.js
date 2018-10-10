@@ -39,6 +39,8 @@ define([
                     console.log(reason);
                     label.define({ label: '<h2>Class diagram not available for \'' + modelId + '\' model' });
                     label.refresh();
+                    diagram.define({ template: '' });
+                    diagram.refresh();
                 });
         }
     };
