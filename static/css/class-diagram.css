@@ -1,0 +1,8 @@
+div.mermaid {
+    padding: 30px;
+    overflow: auto;
+}
+
+div.mermaid svg {
+    overflow: visible;
+}

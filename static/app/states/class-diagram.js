@@ -9,7 +9,7 @@ define([
     var ui = {
         rows: [
             { view: 'label', id: ids.label, height: 80, align: 'center', label: '' },
-            { view: 'template', id: ids.diagram, template: '' }
+            { view: 'template', id: ids.diagram, css: { overflow: 'auto' }, template: '' }
         ]
     };
 
