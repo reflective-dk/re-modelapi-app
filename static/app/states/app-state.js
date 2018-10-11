@@ -21,18 +21,28 @@ define([
               hidden: true,
               cols: [
                   navMenu.ui,
+                  { type: 'header',
+	            template: 'Reflective Model API Explorer',
+                    width: 300,
+	            borderless: true
+	          },
                   { id: 'vt',
                     view: 'datepicker',
-                    label: 'Visningstidspunkt:',
-                    labelWidth: 140,
-                    width: 280,
+                    tooltip: 'Visningstidspunkt',
+                    width: 200,
                     stringResult: true,
-                    format: '%d-%m-%Y' },
+                    format: '%d-%m-%Y'
+                  },
                   { gravity: 2 },
-                  { id: 'session', type: 'header', borderless: true, template: '<span class="webix_icon icon fa-user-circle-o big_icon"></span><span class="user">#username#</span>' },
+                  { view: 'icon',
+                    icon: 'user',
+                    id: 'user-menu',
+                    borderless: true
+                  },
                   logoutButton.ui
-              ] },
-            { cols:[
+              ]
+            },
+            { cols: [
                 modelMenu.ui,
                 { $subview: true }
             ]}
@@ -73,7 +83,7 @@ define([
                            { 'valid-on': validOn.toISOString().slice(0,10) },
                            { inherit: true });
         });
-        $$('session').parse({ username: basekit.username() });
+        $$('user-menu').define({ tooltip: basekit.username() });
 	$$('toolbar').show();
         navMenu.onInit($$('toolbar').$height);
     }
