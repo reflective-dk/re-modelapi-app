@@ -73,7 +73,8 @@ define([
             var perspective = Object.keys(ids).filter(function(p) {
                 return ids[p] === tableId;
             })[0];
-            window.open('/app/modelapi/#/csv?perspective=' + perspective);
+            webix.csv.delimiter.cols = ';';
+            webix.toCSV($$(tableId), { filename: perspective });
         });
     }
 
