@@ -69,23 +69,27 @@ define([
         initTable('role-assignments', ids.roleAssignmentTable);
         initTable('user-accounts', ids.userAccountTable);
         initTable('locations', ids.locationTable);
+        fetchContents('units', ids.unitTable);
     }
 
     function initTable(perspective, tableId) {
         var table = $$(tableId);
         webix.extend(table, webix.ProgressBar);
-        table.attachEvent('onViewShow', function() {
-            var promise = promises[tableId] = promises[tableId] || situ.fetchPerspective(perspective);
-            if (table.getFirstId()) {
-                return;
-            }
-            table.showProgress();
-            promise.then(function(rowsAndCols) {
-                table.config.columns = rowsAndCols.columns;
-                table.refreshColumns();
-                table.define('data', rowsAndCols.rows);
-                table.hideProgress();
-            });
+        table.attachEvent('onViewShow', function() { fetchContents(perspective, tableId); });
+    }
+
+    function fetchContents(perspective, tableId) {
+        var table = $$(tableId);
+        var promise = promises[tableId] = promises[tableId] || situ.fetchPerspective(perspective);
+        if (table.getFirstId()) {
+            return;
+        }
+        table.showProgress();
+        promise.then(function(rowsAndCols) {
+            table.config.columns = rowsAndCols.columns;
+            table.refreshColumns();
+            table.define('data', rowsAndCols.rows);
+            table.hideProgress();
         });
     }
 });
