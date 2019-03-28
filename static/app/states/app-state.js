@@ -63,14 +63,25 @@ define([
             $$('vt').setValue(validOn);
             modelMenu.onInit(validOn)
                 .then(function(modelIds) {
-                    if (context.parameters['model-id'] && modelIds.indexOf(context.parameters['model-id']) == -1) {
-                        console.log('redirecting to explorer');
-                        stateRouter.go('app.resource',
-                                       { 'valid-on': validOn.toISOString().slice(0,10) });
-                    } else {
-                        modelMenu.selectMenuItem(context.parameters['model-id']);
+                    var modelId = context.parameters['model-id'];
+                    if (modelId && modelIds.indexOf(modelId) > -1) {
+                        modelMenu.selectMenuItem(modelId);
                         webix.UIManager.setFocus($$(modelMenu.ids.menu));
+                        return;
                     }
+                    if (stateRouter.stateIsActive('app.resource')) {
+                        $$(modelMenu.ids.menu).select(modelMenu.ids.explorer);
+                        webix.UIManager.setFocus($$(modelMenu.ids.menu));
+                        return;
+                    }
+                    if (stateRouter.stateIsActive('app.perspectives')) {
+                        $$(modelMenu.ids.menu).select(modelMenu.ids.perspectives);
+                        webix.UIManager.setFocus($$(modelMenu.ids.menu));
+                        return;
+                    }
+                    console.log('redirecting to explorer');
+                    stateRouter.go('app.resource',
+                                   { 'valid-on': validOn.toISOString().slice(0,10) });
                 })
                 .fail(console.log);
         }

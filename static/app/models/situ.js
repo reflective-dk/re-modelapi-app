@@ -3,11 +3,31 @@ define([
 ], function(webix, basekit, promise, models) {
     return {
         fetchResource: fetchResource,
-        generateDiagram: generateDiagram
+        generateDiagram: generateDiagram,
+        fetchPerspective: fetchPerspective
     };
 
     function fetchResource(path) {
         return basekit.fetchResource(path)
+            .catch(function(reason) { return reason.response; });
+    }
+
+    function fetchPerspective(perspective, asCsv) {
+        return basekit.fetchPerspective(perspective, asCsv)
+            .then(function(rows) {
+                var columns = {};
+                rows.forEach(function(row) {
+                    Object.keys(row).forEach(function(key) {
+                        columns[key] = true;
+                    });
+                });
+                return {
+                    columns: Object.keys(columns).map(function(key) {
+                        return { id: key, header: key };
+                    }),
+                    rows: rows
+                };
+            })
             .catch(function(reason) { return reason.response; });
     }
 

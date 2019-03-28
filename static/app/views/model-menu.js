@@ -3,9 +3,10 @@ define([
 ], function(webix, promise, $$, models) {
     return function(options) {
         var self = this;
-        var explorerId = webix.uid().toString();
         this.ids = {
-            menu: webix.uid().toString()
+            menu: webix.uid().toString(),
+            explorer: webix.uid().toString(),
+            perspectives: webix.uid().toString()
         };
         this.modelIds = {};
         this.ui = {
@@ -48,11 +49,18 @@ define([
                     menu.sort('value');
                     menu.add({
                         value: 'API-udforsker',
-                        id: explorerId,
+                        id: self.ids.explorer,
                         // Cannot refer to child state in parent template (stateRouter.makePath())
                         href: '#/app/resource?' + suffix,
                         icon: 'home'
                     }, 0);
+                    menu.add({
+                        value: 'Perspektiver',
+                        id: self.ids.perspectives,
+                        // Cannot refer to child state in parent template (stateRouter.makePath())
+                        href: '#/app/perspectives?' + suffix,
+                        icon: 'home'
+                    }, 1);
                     initCompleted.resolve(true);
                     return Object.keys(self.modelIds);
                 });
@@ -62,7 +70,7 @@ define([
             initCompleted = initCompleted || promise.reject(false);
             var menu = $$(self.ids.menu);
             initCompleted.then(function() {
-                var itemId = self.modelIds[modelId] || explorerId;
+                var itemId = self.modelIds[modelId] || self.ids.explorer;
                 if (itemId) {
                     menu.select(itemId);
                 }
