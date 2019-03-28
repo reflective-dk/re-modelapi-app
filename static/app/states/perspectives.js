@@ -3,11 +3,12 @@ define([
 ], function(webix, $$, stateRouter, situ) {
     var ids = {
         button: webix.uid().toString(),
-        unitTable: webix.uid().toString(),
-        employeeTable: webix.uid().toString(),
-        roleAssignmentTable: webix.uid().toString(),
-        userAccountTable: webix.uid().toString(),
-        locationTable: webix.uid().toString()
+        tabview: webix.uid().toString(),
+        units: webix.uid().toString(),
+        employees: webix.uid().toString(),
+        'role-assignments': webix.uid().toString(),
+        'user-accounts': webix.uid().toString(),
+        locations: webix.uid().toString()
     };
 
     var promises = {};
@@ -18,44 +19,43 @@ define([
         template: {
             $ui: {
                 rows: [
-                    { view: 'tabview', cells: [
+                    { id: ids.tabview,
+                      view: 'tabview', cells: [
                         { id: 'units', header: 'Enheder',
                           body: {
-                              id: ids.unitTable,
+                              id: ids.units,
                               view: 'datatable',
                               resizeColumn: true
                           } },
                         { id: 'employees', header: 'Medarbejdere',
                           body: {
-                              id: ids.employeeTable,
+                              id: ids.employees,
                               view: 'datatable',
                               resizeColumn: true
                           } },
                         { id: 'role-assignments', header: 'Rolletildelinger',
                           body: {
-                              id: ids.roleAssignmentTable,
+                              id: ids['role-assignments'],
                               view: 'datatable',
                               resizeColumn: true
                           } },
                         { id: 'user-accounts', header: 'Brugere',
                           body: {
-                              id: ids.userAccountTable,
+                              id: ids['user-accounts'],
                               view: 'datatable',
                               resizeColumn: true
                           } },
                         { id: 'locations', header: 'Lokationer',
                           body: {
-                              id: ids.locationTable,
+                              id: ids.locations,
                               view: 'datatable',
                               resizeColumn: true
                           } },
                     ] },
                     { cols: [
                         {},
-                        { id: ids.button,
-                          view: 'button',
-                          value: 'Hent',
-                          inputWidth: 100 },
+		        { view: 'button', id: ids.button, label: 'Hent CSV',
+                          type: 'form', height: 50, width: 100 }
                     ] }
                 ]
             },
@@ -64,12 +64,17 @@ define([
     };
 
     function init() {
-        initTable('units', ids.unitTable);
-        initTable('employees', ids.employeeTable);
-        initTable('role-assignments', ids.roleAssignmentTable);
-        initTable('user-accounts', ids.userAccountTable);
-        initTable('locations', ids.locationTable);
-        fetchContents('units', ids.unitTable);
+        Object.keys(ids).forEach(function(perspective) {
+            initTable(perspective, ids[perspective]);
+        });
+        fetchContents('units', ids.units);
+        $$(ids.button).attachEvent('onItemClick', function() {
+            var tableId = $$(ids.tabview).getValue();
+            var perspective = Object.keys(ids).filter(function(p) {
+                return ids[p] === tableId;
+            })[0];
+            window.open('/app/modelapi/#/csv?perspective=' + perspective);
+        });
     }
 
     function initTable(perspective, tableId) {
