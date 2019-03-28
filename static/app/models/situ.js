@@ -22,9 +22,7 @@ define([
                     });
                 });
                 return {
-                    columns: Object.keys(columns).map(function(key) {
-                        return { id: key, header: key };
-                    }),
+                    columnNames: Object.keys(columns),
                     rows: rows
                 };
             })

@@ -91,7 +91,9 @@ define([
         }
         table.showProgress();
         promise.then(function(rowsAndCols) {
-            table.config.columns = rowsAndCols.columns;
+            table.config.columns = rowsAndCols.columnNames.map(function(key) {
+                return { id: key, header: key, sort: 'string' };
+            });
             table.refreshColumns();
             table.define('data', rowsAndCols.rows);
             table.hideProgress();
