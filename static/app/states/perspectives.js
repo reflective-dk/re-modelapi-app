@@ -10,6 +10,8 @@ define([
         locationTable: webix.uid().toString()
     };
 
+    var promises = {};
+
     return {
         name: 'app.perspectives',
         route: '/perspectives',
@@ -73,12 +75,12 @@ define([
         var table = $$(tableId);
         webix.extend(table, webix.ProgressBar);
         table.attachEvent('onViewShow', function() {
+            var promise = promises[tableId] = promises[tableId] || situ.fetchPerspective(perspective);
             if (table.getFirstId()) {
-                console.log('first id', table.getFirstId());
                 return;
             }
             table.showProgress();
-            situ.fetchPerspective(perspective).then(function(rowsAndCols) {
+            promise.then(function(rowsAndCols) {
                 table.config.columns = rowsAndCols.columns;
                 table.refreshColumns();
                 table.define('data', rowsAndCols.rows);
