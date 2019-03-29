@@ -21,6 +21,10 @@ jobs:
           command: |
             gcloud docker -- run --name modelapi-app -d -p 8080:8080 gcr.io/city-7337/modelapi-app
       - run:
+          name: Tag modelapi app
+          command: |
+            gcloud -q container images add-tag gcr.io/city-7337/modelapi-app:latest gcr.io/city-7337/modelapi-app:build_$CIRCLE_BUILD_NUM
+      - run:
           name: Check running
           command: |
             docker logs modelapi-app
