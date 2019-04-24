@@ -70,11 +70,19 @@ define([
         fetchContents('units', ids.units);
         $$(ids.button).attachEvent('onItemClick', function() {
             var tableId = $$(ids.tabview).getValue();
+            var table = $$(tableId);
             var perspective = Object.keys(ids).filter(function(p) {
                 return ids[p] === tableId;
             })[0];
+            var columns = table.config.columns.map(function(column) {
+                return {
+                    id: column.id,
+                    header: column.header,
+                    template: webix.template('"#' + column.id + '#"')
+                };
+            });
             webix.csv.delimiter.cols = ';';
-            webix.toCSV($$(tableId), { filename: perspective });
+            webix.toCSV(table, { filename: perspective, columns: columns });
         });
     }
 
@@ -92,9 +100,9 @@ define([
         }
         table.showProgress();
         promise.then(function(rowsAndCols) {
-            table.config.columns = rowsAndCols.columnNames.map(function(key) {
-                return { id: key, header: key, sort: 'string' };
-            });
+            table.config.columns = rowsAndCols.columnNames
+                .filter(function(key) { return !/id$/i.test(key); })
+                .map(function(key) { return { id: key, header: key, sort: 'string' }; });
             table.refreshColumns();
             table.define('data', rowsAndCols.rows);
             table.hideProgress();

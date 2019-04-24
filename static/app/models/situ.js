@@ -22,11 +22,28 @@ define([
                     });
                 });
                 return {
-                    columnNames: Object.keys(columns),
+                    columnNames: columnNames(columns),
                     rows: rows
                 };
             })
             .catch(function(reason) { return reason.response; });
+    }
+
+    function columnNames(columns) {
+        var doLast = [ 'Bruger', 'Email' ];
+        var last = [];
+        var columnNames = Object.keys(columns).filter(function(col) {
+            switch (true) {
+            case doLast.some(function(prefix) { return !!col.match('^' + prefix); }):
+                last.push(col);
+            case col === 'AktivFra':
+            case col === 'AktivTil':
+                return false;
+            default:
+                return true;
+            }
+        });
+        return columnNames.concat(last.sort(), [ 'AktivFra', 'AktivTil' ]);
     }
 
     function generateDiagram(modelId) {
