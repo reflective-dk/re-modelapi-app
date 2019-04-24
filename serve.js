@@ -8,13 +8,13 @@ const cookieParser = require('cookie-parser');
 var app = express();
 app.use(cookieParser());
 var indexpath = path.join(__dirname + '/static/index.html');
-if (process.argv.length === 3 && process.argv[2] === 'develop') {
+if (process.argv.length === 4 && process.argv[2] === 'develop') {
   var credentials = require('./credentials.json');
   console.log('running in dev mode');
   app.use('/app/modelapi/static/', express.static('static', {maxAge: 1}));
   app.use('/app/modelapi/common/', express.static('node_modules/re-common-app', {maxAge: 1}));
 
-  var host = 'https://test.reflective.dk';
+  var host = credentials.host;
   var client = new Client({ host: host });
   app.get('/app/modelapi/', serve_utils.test_token(client, credentials, indexpath));
 
