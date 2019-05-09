@@ -7,7 +7,7 @@ requirejs.config({
         // webix: '//cdn.webix.com/5.4/webix'
         mermaid: '../shims/expose-mermaid',
         webix: '../../common/js/webix',
-        axios: '//unpkg.com/axios/dist/axios.min'
+        axios: '../../common/js/axios'
     },
     shim: {
         webix: {
