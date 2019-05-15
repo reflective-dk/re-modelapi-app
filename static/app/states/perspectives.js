@@ -78,10 +78,14 @@ define([
                 return {
                     id: column.id,
                     header: column.header,
-                    template: webix.template('"#' + column.id + '#"')
+                    template: function(row) {
+                        var val = row[column.id];
+                        return val ? '"' + val + '"' : '';
+                    }
                 };
             });
             webix.csv.delimiter.cols = ';';
+            webix.csv.escape = false;
             webix.toCSV(table, { filename: perspective, columns: columns });
         });
     }
