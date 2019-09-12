@@ -8,9 +8,13 @@ const cookieParser = require('cookie-parser');
 var app = express();
 app.use(cookieParser());
 var indexpath = path.join(__dirname + '/static/index.html');
-if (process.argv.length === 4 && process.argv[2] === 'develop') {
-  var credentials = require('./credentials.json');
-  console.log('running in dev mode');
+if (process.argv.length === 4 && process.argv[2] === 'dev') {
+  if (process.argv.length !== 4) {
+    throw new Error('you must provide credentials reference ie. "npm run dev hjertekoebing-test"');
+  }
+  console.log('Running in dev mode');
+  var credentials = require('./credentials/' + process.argv[3] + '.json');
+  
   app.use('/app/modelapi/static/', express.static('static', {maxAge: 1}));
   app.use('/app/modelapi/common/', express.static('node_modules/re-common-app', {maxAge: 1}));
 

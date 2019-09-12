@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -Rf ./www-built; node tools/r.js -o tools/build.js",
     "start": "node serve.js",
-    "dev": "node serve.js develop",
+    "dev": "node serve.js dev",
     "test": "mocha --recursive"
   },
   "keywords": [
