@@ -3,9 +3,6 @@
   border-radius: 0;
 }
 
-#modelapi .webix_cal_body .webix_cal_row {
-    clear: inherit;
-}
 /** webix override END **/
 
 .webix_item_tab{
