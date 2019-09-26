@@ -1,3 +1,13 @@
+/** webix override BEGIN **/
+#modelapi .webix_el_datepicker .webix_inp_static, #modelapi .webix_el_combo input {
+  border-radius: 0;
+}
+
+#modelapi .webix_cal_body .webix_cal_row {
+    clear: inherit;
+}
+/** webix override END **/
+
 .webix_item_tab{
  	position:relative;
 }

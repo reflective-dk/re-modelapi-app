@@ -1,14 +1,13 @@
 define([
-    'webix', 'common/$$', '../models/situ', 'mermaid'
-], function(webix, $$, situ, mermaid) {
+    'webix', 'common/$$', '../models/situ', 'mermaid', 'panzoom', 'jquery', 'nomnoml', 'diagram'
+], function(webix, $$, situ, mermaid, panzoom, jquery, nomnoml, Diagram) {
     var ids = {
-        label: 'class-diagram-label',
+        open: 'class-diagram-open',
         diagram: 'class-diagram'
     };
 
     var ui = {
         rows: [
-            { view: 'label', id: ids.label, height: 80, align: 'center', label: '' },
             { view: 'template', id: ids.diagram, css: { overflow: 'auto' }, template: '' }
         ]
     };
@@ -25,23 +24,50 @@ define([
                 // TODO: Go to different state
                 return;
             }
-            var label = $$(ids.label);
             var diagram = $$(ids.diagram);
-            situ.generateDiagram(modelId)
-                .then(function(def) {
-                    label.define({ label: '<h2>Class diagram for \'' + modelId + '\' model' });
-                    label.refresh();
-                    diagram.define({ template: '<div class="mermaid">' + def + '</div>' });
-                    diagram.refresh();
-                    mermaid.init();
-                })
-                .fail(function(reason) {
-                    console.log(reason);
-                    label.define({ label: '<h2>Class diagram not available for \'' + modelId + '\' model' });
-                    label.refresh();
-                    diagram.define({ template: '' });
-                    diagram.refresh();
+            if (modelId === 'camunda') {
+               return situ.getCamundaTables()
+                .then(function (result) {
+                  let sources = Diagram.tablesToNONOML({
+                    tables: result
+                  });
+                  
+                  diagram.define({ template: '<div id="diagram"><canvas id="relatedClasses"></canvas><canvas id="unrelatedClasses"></canvas></div>' });
+                  diagram.refresh();
+                  
+                  var relatedClassesCanvas = document.getElementById('relatedClasses');
+                  var unrelatedClassesCanvas = document.getElementById('unrelatedClasses');
+                  
+                  nomnoml.draw(relatedClassesCanvas, sources.relatedClassesSource);
+                  nomnoml.draw(unrelatedClassesCanvas, sources.unrelatedClassesSource);
+                  
+                  jquery('#diagram').panzoom();
+                  document.getElementById('diagram').addEventListener('wheel', function () {
+                    jquery('#diagram').panzoom("zoom", event.deltaY < 0);
+                  });
                 });
+            } else {
+                situ.generateDiagram(modelId)
+                    .then(function(def) {
+                        if (def.length < 1000) {
+                            //small diagram, reduce canvas
+                            diagram.define({ template: '<div id="diagram" class="mermaid" style="width:300px;margin: 0 auto;">' + def + '</div>' });
+                        } else {
+                            diagram.define({ template: '<div id="diagram" class="mermaid">' + def + '</div>' });
+                        }
+                        diagram.refresh();
+                        jquery('#diagram').panzoom();
+                        document.getElementById('diagram').addEventListener('wheel', function () {
+                          jquery('#diagram').panzoom("zoom", event.deltaY < 0);
+                        });
+                        mermaid.init();
+                    })
+                    .fail(function(reason) {
+                        console.error(reason);
+                        diagram.define({ template: '<h2>Class diagram not available for \'' + modelId + '\' model</h2>' });
+                        diagram.refresh();
+                    });
+            }
         }
     };
 });

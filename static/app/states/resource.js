@@ -16,20 +16,31 @@ define([
         template: {
             $ui: {
                 rows: [
-                    { cols: [
-                        {},
+                    {
+                      type: 'border-layout',
+                      cols: [
+                        {
+                          width: 5
+                        },
                         { id: ids.path,
                           view: 'text',
-                          value: 'ro/units', label: 'Sti' },
+                          value: 'ro/units',
+                          tooltip: 'Path to ressource',
+                          width: 200
+                        },
                         { id: ids.button,
-                          view: 'button',
-                          value: 'Hent',
-                          inputWidth: 100 },
+                          view: 'icon',
+                          type: 'icon',
+                          icon: 'play',
+                          tooltip: 'Get the ressources',
+                          width: 30
+                        },
                         {}
                     ] },
                     { view: 'template',
                       id: 'json-viewer-webix-view',
-                      template: '<div id="json-viewer"></div>' }
+                      template: '<div id="json-viewer"></div>',
+                    }
                 ]
             },
             $oninit: init

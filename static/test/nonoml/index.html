@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Component test</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="../../../common/favicon.png" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+        <link rel="stylesheet" href="../../../common/css/webix.css" type="text/css" />
+        <link rel="stylesheet" href="../../css/app.css" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="//code.jquery.com/qunit/qunit-2.6.0.css">
+        <script src="//code.jquery.com/qunit/qunit-2.6.0.js"></script>
+        <script src="../../../common/lib/require.js"></script>
+        <style>
+          body.webix_full_screen {
+            overflow: auto;
+          }
+        </style>
+    </head>
+    <body>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+      <canvas id="relatedClasses"></canvas>
+      <canvas id="unrelatedClasses"></canvas>
+      <script>
+        requirejs.config({
+          baseUrl: '../../lib/',
+          paths: {
+            jquery: '../js/jquery',
+            dagre: '../js/dagre.min',
+            graphlib: '../js/graphlib.min',
+            lodash: '../js/lodash',
+            common: '../../common/lib',
+            webix: '../../common/js/webix',
+            axios: '../../common/js/axios',
+            nomnoml: '../js/nomnoml'
+          },
+          shim: {
+            dagre: {
+              exports: 'dagre'
+            },
+            lodash: {
+              exports: 'lodash'
+            },
+            webix: {
+              exports: 'webix'
+            },
+            nomnoml: {
+              exports: 'nomnoml',
+              deps: ['dagre']
+            }
+          },
+          map: {
+              '*': {
+                  // Backbone requires underscore. This forces requireJS to load lodash instead:
+                  'underscore': 'lodash'
+              }
+          }
+        });
+        
+        requirejs(['webix', 'lodash', 'dagre'], (webix, lodash, dagre) => {
+          webix.$testmode = true;
+          window.dagre = dagre;
+        });
+
+        let testDataDir = window.location.href + '../data/';
+        requirejs(['common/request', 'diagram', 'nomnoml'], (request, Diagram, nomnoml) => {
+          var currentInstance;
+
+          QUnit.module("test diagram component", function( hooks ) {
+            QUnit.test( "test", function( assert ) {
+              return request('get', testDataDir + 'many_tables.json')
+              .then((result) => {
+                let sources = Diagram.tablesToNONOML({
+                  tables: result.objects
+                });
+                
+                var relatedClassesCanvas = document.getElementById('relatedClasses');
+                var unrelatedClassesCanvas = document.getElementById('unrelatedClasses');
+                
+                nomnoml.draw(relatedClassesCanvas, sources.relatedClassesSource);
+                nomnoml.draw(unrelatedClassesCanvas, sources.unrelatedClassesSource);
+                
+                assert.ok(true);
+              });
+            });
+          });
+        });
+    </script>
+    </body>
+</html>

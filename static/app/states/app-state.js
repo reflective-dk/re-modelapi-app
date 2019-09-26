@@ -7,12 +7,16 @@ define([
     var modelMenu = new ModelMenu({
         getConfig: function() {
             // TODO: get config with call from service
-            return promise.resolve({ ro: 'ro', aau: 'aau' });
+            let models = { ro: 'ro', mariadb: 'mariadb', camunda: 'camunda' };
+            if (basekit.client.context.domain === 'aau') {
+                models.aau = 'aau';
+            }
+            return promise.resolve(models);
         }
     });
 
     var navMenu = new NavMenu();
-    var logoutButton = new LogoutButton({ callback: '/app/modelapi/' });
+    var logoutButton = new LogoutButton({ username: basekit.username(), callback: '/app/modelapi/' });
 
     var ui = {
         rows: [
@@ -21,24 +25,17 @@ define([
               hidden: true,
               cols: [
                   navMenu.ui,
-                  { type: 'header',
-	            template: 'Reflective Model API Explorer',
-                    width: 300,
-	            borderless: true
-	          },
+                  { 
+                    width: 160
+	              },
                   { id: 'vt',
                     view: 'datepicker',
                     tooltip: 'Visningstidspunkt',
-                    width: 200,
+                    width: 120,
                     stringResult: true,
                     format: '%d-%m-%Y'
                   },
                   { gravity: 2 },
-                  { view: 'icon',
-                    icon: 'user',
-                    id: 'user-menu',
-                    borderless: true
-                  },
                   logoutButton.ui
               ]
             },
@@ -94,8 +91,7 @@ define([
                            { 'valid-on': validOn.toISOString().slice(0,10) },
                            { inherit: true });
         });
-        $$('user-menu').define({ tooltip: basekit.username() });
-	$$('toolbar').show();
+    	$$('toolbar').show();
         navMenu.onInit($$('toolbar').$height);
     }
 });

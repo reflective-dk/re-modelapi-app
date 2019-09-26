@@ -4,6 +4,7 @@ define([
     return {
         fetchResource: fetchResource,
         generateDiagram: generateDiagram,
+        getCamundaTables: getCamundaTables,
         fetchPerspective: fetchPerspective
     };
 
@@ -46,6 +47,13 @@ define([
         return columnNames.concat(last.sort(), [ 'AktivFra', 'AktivTil' ]);
     }
 
+    function getCamundaTables() {
+      return basekit.query({
+          relatesTo: {
+              class: "e99d7f86-739c-40e7-953b-d73869572066"
+          }
+      });
+    }
     function generateDiagram(modelId) {
         return fetchResource(modelId)
             .then(function(conf) {
@@ -67,9 +75,6 @@ define([
 
     function pushLinesForClass(cls, lines) {
         var name = cls.snapshot.name;
-        if (name === 'Location') {
-            console.log(cls)
-        }
         var labelsets = {};
         if (cls.snapshot.extends) {
             lines.push(cls.snapshot.extends.name + ' <|-- ' + name);
@@ -96,7 +101,7 @@ define([
             .forEach(function(k) {
                 var collection = collections[k];
                 var dataType = (typeof collection.dataType === 'string') ? collection.dataType : collection.dataType.type;
-                dataType += collection.type + '[]';
+                dataType +=  '[]';
                 lines.push(name + ' : ' + dataType.replace(/json/, 'string') + ' ' + k);
             });
     }

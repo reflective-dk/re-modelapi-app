@@ -1,0 +1,267 @@
+{
+  "objects": [
+    {
+      "id": "e41f7eab-c309-4806-a511-0eb5b4029d66",
+      "snapshot": {
+        "class": {
+          "id": "e99d7f86-739c-40e7-953b-d73869572066",
+          "name": "MariaDB Table"
+        },
+        "name": "ACT_RU_VARIABLE",
+        "options": {
+          "charset": "utf8",
+          "collation": "utf8_bin",
+          "engine": "InnoDB"
+        },
+        "primaryKey": "ID_",
+        "columns": {
+          "ID_": {
+            "name": "ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": false
+            }
+          },
+          "REV_": {
+            "name": "REV_",
+            "type": {
+              "datatype": "int",
+              "width": 11
+            },
+            "options": {
+              "nullable": true
+            }
+          },
+          "TYPE_": {
+            "name": "TYPE_",
+            "type": {
+              "datatype": "varchar",
+              "length": 255
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": false
+            }
+          },
+          "NAME_": {
+            "name": "NAME_",
+            "type": {
+              "datatype": "varchar",
+              "length": 255
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": false
+            }
+          },
+          "EXECUTION_ID_": {
+            "name": "EXECUTION_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "PROC_INST_ID_": {
+            "name": "PROC_INST_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "CASE_EXECUTION_ID_": {
+            "name": "CASE_EXECUTION_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "CASE_INST_ID_": {
+            "name": "CASE_INST_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "TASK_ID_": {
+            "name": "TASK_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "BYTEARRAY_ID_": {
+            "name": "BYTEARRAY_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "DOUBLE_": {
+            "name": "DOUBLE_",
+            "type": {
+              "datatype": "double"
+            },
+            "options": {
+              "nullable": true
+            }
+          },
+          "LONG_": {
+            "name": "LONG_",
+            "type": {
+              "datatype": "int",
+              "width": 20
+            },
+            "options": {
+              "nullable": true
+            }
+          },
+          "TEXT_": {
+            "name": "TEXT_",
+            "type": {
+              "datatype": "varchar",
+              "length": 4000
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "TEXT2_": {
+            "name": "TEXT2_",
+            "type": {
+              "datatype": "varchar",
+              "length": 4000
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          },
+          "VAR_SCOPE_": {
+            "name": "VAR_SCOPE_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": false
+            }
+          },
+          "SEQUENCE_COUNTER_": {
+            "name": "SEQUENCE_COUNTER_",
+            "type": {
+              "datatype": "int",
+              "width": 20
+            },
+            "options": {
+              "nullable": true
+            }
+          },
+          "IS_CONCURRENT_LOCAL_": {
+            "name": "IS_CONCURRENT_LOCAL_",
+            "type": {
+              "datatype": "int",
+              "width": 4
+            },
+            "options": {
+              "nullable": true
+            }
+          },
+          "TENANT_ID_": {
+            "name": "TENANT_ID_",
+            "type": {
+              "datatype": "varchar",
+              "length": 64
+            },
+            "options": {
+              "collation": "utf8_bin",
+              "nullable": true
+            }
+          }
+        },
+        "foreignKeys": {
+          "ACT_FK_VAR_BYTEARRAY": {
+            "name": "ACT_FK_VAR_BYTEARRAY",
+            "column": "BYTEARRAY_ID_",
+            "reference": {
+              "table": "ACT_GE_BYTEARRAY",
+              "column": "ID_"
+            }
+          },
+          "ACT_FK_VAR_CASE_EXE": {
+            "name": "ACT_FK_VAR_CASE_EXE",
+            "column": "CASE_EXECUTION_ID_",
+            "reference": {
+              "table": "ACT_RU_CASE_EXECUTION",
+              "column": "ID_"
+            }
+          },
+          "ACT_FK_VAR_CASE_INST": {
+            "name": "ACT_FK_VAR_CASE_INST",
+            "column": "CASE_INST_ID_",
+            "reference": {
+              "table": "ACT_RU_CASE_EXECUTION",
+              "column": "ID_"
+            }
+          },
+          "ACT_FK_VAR_EXE": {
+            "name": "ACT_FK_VAR_EXE",
+            "column": "EXECUTION_ID_",
+            "reference": {
+              "table": "ACT_RU_EXECUTION",
+              "column": "ID_"
+            }
+          },
+          "ACT_FK_VAR_PROCINST": {
+            "name": "ACT_FK_VAR_PROCINST",
+            "column": "PROC_INST_ID_",
+            "reference": {
+              "table": "ACT_RU_EXECUTION",
+              "column": "ID_"
+            }
+          }
+        }
+      },
+      "regcount": 1,
+      "from": "2019-09-25T06:40:57.147Z",
+      "context": {
+        "validOn": "2019-09-25T06:41:17.894Z",
+        "knownOn": "2019-09-25T06:40:57.147Z",
+        "domain": "hjertekoebing"
+      },
+      "registration": {
+        "id": "302b820d-663f-47fa-a5d8-fdad843b4187",
+        "timestamp": "2019-09-25T06:40:57.147Z"
+      }
+    }
+  ]
+}

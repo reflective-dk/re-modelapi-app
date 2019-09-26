@@ -12,9 +12,8 @@ define([
         this.ui = {
             type: 'clean',
             css: 'app-left-panel',
-            padding: 10,
+            padding: 0,
             margin: 20,
-            borderless: true,
             rows: [ {
                 view: 'menu',
                 id: this.ids.menu,
