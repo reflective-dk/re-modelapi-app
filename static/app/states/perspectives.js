@@ -118,7 +118,12 @@ define([
             }
             table.config.columns = rowsAndCols.columnNames
                 .filter(function(key) { return !/id$/i.test(key); })
-                .map(function(key) { return { id: key, header: key, sort: 'string' }; });
+                .map(function(key) { return {
+                    id: key,
+                    header: key,
+                    sort: 'string',
+                    fillspace: true
+                }; });
             table.refreshColumns();
             table.define('data', rowsAndCols.rows);
             table.hideProgress();

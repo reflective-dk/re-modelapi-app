@@ -33,18 +33,19 @@ define([
     function columnNames(columns) {
         var doLast = [ 'Bruger', 'Email' ];
         var last = [];
+        var activeFromTo = [];
         var columnNames = Object.keys(columns).filter(function(col) {
             switch (true) {
             case doLast.some(function(prefix) { return !!col.match('^' + prefix); }):
                 last.push(col);
             case col === 'AktivFra':
             case col === 'AktivTil':
-                return false;
+                return activeFromTo = [ 'AktivFra', 'AktivTil' ];
             default:
                 return true;
             }
         });
-        return columnNames.concat(last.sort(), [ 'AktivFra', 'AktivTil' ]);
+        return columnNames.concat(last.sort(), activeFromTo);
     }
 
     function getCamundaTables() {
