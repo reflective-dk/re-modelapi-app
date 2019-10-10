@@ -8,6 +8,7 @@ define([
         employees: webix.uid().toString(),
         'role-assignments': webix.uid().toString(),
         'user-accounts': webix.uid().toString(),
+        rights: webix.uid().toString(),
         locations: webix.uid().toString()
     };
 
@@ -42,6 +43,12 @@ define([
                         { id: 'user-accounts', header: 'Brugere',
                           body: {
                               id: ids['user-accounts'],
+                              view: 'datatable',
+                              resizeColumn: true
+                          } },
+                        { id: 'rights', header: 'Rettigheder',
+                          body: {
+                              id: ids.rights,
                               view: 'datatable',
                               resizeColumn: true
                           } },
@@ -104,6 +111,11 @@ define([
         }
         table.showProgress();
         promise.then(function(rowsAndCols) {
+            if (!rowsAndCols.columnNames) {
+                console.log('perspective \'' + perspective + '\' not available on server');
+                table.hideProgress();
+                return;
+            }
             table.config.columns = rowsAndCols.columnNames
                 .filter(function(key) { return !/id$/i.test(key); })
                 .map(function(key) { return { id: key, header: key, sort: 'string' }; });
