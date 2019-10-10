@@ -121,7 +121,7 @@ define([
                 .map(function(key) { return {
                     id: key,
                     header: key,
-                    sort: 'string',
+                    sort: /^Antal/.test(key) ? 'int' : 'string',
                     fillspace: true
                 }; });
             table.refreshColumns();
