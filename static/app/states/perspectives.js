@@ -117,7 +117,8 @@ define([
                 return;
             }
             table.config.columns = rowsAndCols.columnNames
-                .filter(function(key) { return !/id$/i.test(key); })
+                // Leave out all id columns except 'EnhedEksterntId'
+                .filter(function(key) { return key === 'EnhedEksterntId' || !/id$/i.test(key); })
                 .map(function(key) { return {
                     id: key,
                     header: key,
