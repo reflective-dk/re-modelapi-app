@@ -1,6 +1,6 @@
 define([
-    'webix', 'common/$$', './state-router', '../models/situ'
-], function(webix, $$, stateRouter, situ) {
+    'webix', 'common/promise', 'common/$$', './state-router', '../models/situ'
+], function(webix, promise, $$, stateRouter, situ) {
     var ids = {
         button: webix.uid().toString(),
         tabview: webix.uid().toString(),
@@ -12,7 +12,7 @@ define([
         locations: webix.uid().toString()
     };
 
-    var promises = {};
+    var contentPromises = {};
 
     return {
         name: 'app.perspectives',
@@ -26,36 +26,42 @@ define([
                           body: {
                               id: ids.units,
                               view: 'datatable',
+                              select: 'row',
                               resizeColumn: true
                           } },
                         { id: 'employees', header: 'Medarbejdere',
                           body: {
                               id: ids.employees,
                               view: 'datatable',
+                              select: 'row',
                               resizeColumn: true
                           } },
                         { id: 'role-assignments', header: 'Rolletildelinger',
                           body: {
                               id: ids['role-assignments'],
                               view: 'datatable',
+                              select: 'row',
                               resizeColumn: true
                           } },
                         { id: 'user-accounts', header: 'Brugere',
                           body: {
                               id: ids['user-accounts'],
                               view: 'datatable',
+                              select: 'row',
                               resizeColumn: true
                           } },
                         { id: 'rights', header: 'Rettigheder',
                           body: {
                               id: ids.rights,
                               view: 'datatable',
+                              select: 'row',
                               resizeColumn: true
                           } },
                         { id: 'locations', header: 'Lokationer',
                           body: {
                               id: ids.locations,
                               view: 'datatable',
+                              select: 'row',
                               resizeColumn: true
                           } },
                     ] },
@@ -74,7 +80,7 @@ define([
         Object.keys(ids).forEach(function(perspective) {
             initTable(perspective, ids[perspective]);
         });
-        fetchContents('units', ids.units);
+        updateTable('units', ids.units);
         $$(ids.button).attachEvent('onItemClick', function() {
             var tableId = $$(ids.tabview).getValue();
             var table = $$(tableId);
@@ -100,34 +106,42 @@ define([
     function initTable(perspective, tableId) {
         var table = $$(tableId);
         webix.extend(table, webix.ProgressBar);
-        table.attachEvent('onViewShow', function() { fetchContents(perspective, tableId); });
+        table.attachEvent('onViewShow', function() {
+            updateTable(perspective, tableId);
+        });
     }
 
-    function fetchContents(perspective, tableId) {
+    function updateTable(perspective, tableId) {
         var table = $$(tableId);
-        var promise = promises[tableId] = promises[tableId] || situ.fetchPerspective(perspective);
-        if (table.getFirstId()) {
-            return;
-        }
-        table.showProgress();
-        promise.then(function(rowsAndCols) {
-            if (!rowsAndCols.columnNames) {
-                console.log('perspective \'' + perspective + '\' not available on server');
-                table.hideProgress();
-                return;
-            }
-            table.config.columns = rowsAndCols.columnNames
+        var contentsAsPromised = contentPromises[tableId] = contentPromises[tableId] ||
+            promise.resolve()
+            .then(function() {
+                table.showProgress();
+                return situ.fetchPerspective(perspective);
+            })
+            .then(function(rowsAndCols) {
+                if (!rowsAndCols.columnNames) {
+                    console.log('perspective \'' + perspective + '\' not available on server');
+                    return;
+                }
+                table.config.columns = rowsAndCols.columnNames
                 // Leave out all id columns except 'EnhedEksterntId'
-                .filter(function(key) { return key === 'EnhedEksterntId' || !/id$/i.test(key); })
-                .map(function(key) { return {
-                    id: key,
-                    header: key,
-                    sort: /^Antal/.test(key) ? 'int' : 'string',
-                    fillspace: true
-                }; });
-            table.refreshColumns();
-            table.define('data', rowsAndCols.rows);
-            table.hideProgress();
+                    .filter(function(key) { return key === 'EnhedEksterntId' || !/id$/i.test(key); })
+                    .map(function(key) { return {
+                        id: key,
+                        header: key,
+                        sort: /^Antal/.test(key) ? 'int' : 'string',
+                        fillspace: true
+                    }; });
+                table.refreshColumns();
+                table.define('data', rowsAndCols.rows);
+            }).then(function() {
+                table.hideProgress();
+                table.select(table.getFirstId());
+            });
+
+        return contentsAsPromised.then(function() {
+            webix.UIManager.setFocus(table);
         });
     }
 });
