@@ -15,6 +15,12 @@ define([
         }
     });
 
+    var activationFilter = {
+        'active-and-future': 'Aktive og fremtidige',
+        'active-only': 'Kun aktive',
+        all: 'Alle'
+    };
+
     var navMenu = new NavMenu();
     var logoutButton = new LogoutButton({ username: basekit.username(), callback: '/app/modelapi/' });
 
@@ -25,16 +31,21 @@ define([
               hidden: true,
               cols: [
                   navMenu.ui,
-                  { 
-                    width: 160
-	              },
+                  { width: 160 },
                   { id: 'vt',
                     view: 'datepicker',
                     tooltip: 'Visningstidspunkt',
                     width: 120,
                     stringResult: true,
-                    format: '%d-%m-%Y'
-                  },
+                    format: '%d-%m-%Y' },
+                  { id: 'activation-filter-dropdown',
+                    view: 'combo',
+                    tooltip: 'Visning af aktive og inaktive elementer',
+                    width: 200,
+                    editable: false,
+                    options: Object.keys(activationFilter).map(function(k) {
+                        return { id: k, value: activationFilter[k] };
+                    }) },
                   { gravity: 2 },
                   logoutButton.ui
               ]
@@ -54,10 +65,13 @@ define([
             $menu: modelMenu.ids.menu,
             $oninit: init
         },
-        querystringParameters: [ 'model-id', 'valid-on' ],
+        querystringParameters: [ 'model-id', 'valid-on', 'activation-filter' ],
         activate: function(context) {
             var validOn = basekit.setValidOn(new Date(context.parameters['valid-on']));
             $$('vt').setValue(validOn);
+            var filter = activationFilter[context.parameters['activation-filter']]
+                ? context.parameters['activation-filter'] : 'active-and-future';
+            $$('activation-filter-dropdown').setValue(filter);
             modelMenu.onInit(validOn)
                 .then(function(modelIds) {
                     var modelId = context.parameters['model-id'];
@@ -78,7 +92,8 @@ define([
                     }
                     console.log('redirecting to explorer');
                     stateRouter.go('app.resource',
-                                   { 'valid-on': validOn.toISOString().slice(0,10) });
+                                   { 'valid-on': validOn.toISOString().slice(0,10),
+                                     'activation-filter': filter });
                 })
                 .fail(console.log);
         }
@@ -90,6 +105,10 @@ define([
             stateRouter.go(null, // Go to same state with new valid-on parameter
                            { 'valid-on': validOn.toISOString().slice(0,10) },
                            { inherit: true });
+        });
+        $$('activation-filter-dropdown').attachEvent('onChange', function(value) {
+            stateRouter.go(null, // Go to same state with new activation-filter parameter
+                           { 'activation-filter': value }, { inherit: true });
         });
     	$$('toolbar').show();
         navMenu.onInit($$('toolbar').$height);

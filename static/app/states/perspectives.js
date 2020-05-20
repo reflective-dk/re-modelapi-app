@@ -1,6 +1,7 @@
 define([
-    'webix', 'common/promise', 'common/$$', './state-router', '../models/situ'
-], function(webix, promise, $$, stateRouter, situ) {
+    'webix', 'common/promise', 'common/$$', './state-router', '../models/situ',
+    'common/lodash'
+], function(webix, promise, $$, stateRouter, situ, _) {
     var ids = {
         button: webix.uid().toString(),
         tabview: webix.uid().toString(),
@@ -13,6 +14,7 @@ define([
     };
 
     var contentPromises = {};
+    var activationFilter = 'active-and-future';
 
     return {
         name: 'app.perspectives',
@@ -73,6 +75,19 @@ define([
                 ]
             },
             $oninit: init
+        },
+        activate: function(context) {
+            var newActivationFilter = context.parameters['activation-filter'] || activationFilter;
+            if (activationFilter != newActivationFilter) {
+                activationFilter = newActivationFilter;
+                // Clear promise collection to force re-retrieval from the server
+                contentPromises = {};
+                var tableId = $$(ids.tabview).getValue();
+                var perspective = _.find(Object.keys(ids), function(p) {
+                    return ids[p] === tableId;
+                });
+                updateTable(perspective, ids[perspective]);
+            }
         }
     };
 
@@ -84,9 +99,9 @@ define([
         $$(ids.button).attachEvent('onItemClick', function() {
             var tableId = $$(ids.tabview).getValue();
             var table = $$(tableId);
-            var perspective = Object.keys(ids).filter(function(p) {
+            var perspective = _.find(Object.keys(ids), function(p) {
                 return ids[p] === tableId;
-            })[0];
+            });
             var columns = table.config.columns.map(function(column) {
                 return {
                     id: column.id,
@@ -116,22 +131,27 @@ define([
         var contentsAsPromised = contentPromises[tableId] = contentPromises[tableId] ||
             promise.resolve()
             .then(function() {
+                table.clearAll();
                 table.showProgress();
-                return situ.fetchPerspective(perspective);
+                return situ.fetchPerspective(perspective, activationFilter);
             })
             .then(function(rowsAndCols) {
                 if (!rowsAndCols.columnNames) {
                     console.log('perspective \'' + perspective + '\' not available on server');
                     return;
                 }
-                table.config.columns = rowsAndCols.columnNames
-                // Leave out all id columns except 'EnhedEksterntId'
-                    .filter(function(key) { return key === 'EnhedEksterntId' || !/id$/i.test(key); })
+                var filtered = rowsAndCols.columnNames
+                    .filter(function(key) {
+                        // Leave out all id columns except 'EnhedEksterntId'
+                        return key === 'EnhedEksterntId' || !/id$/i.test(key);
+                    });
+                table.config.columns = filtered
                     .map(function(key) { return {
                         id: key,
                         header: key,
-                        sort: /^Antal/.test(key) ? 'int' : 'string',
-                        fillspace: true
+                        sort: /^Antal/.test(key) ? 'int'
+                            : /(Fra|Til)$/.test(key) ? compareDanishDates(key) : 'string',
+                        fillspace: filtered.length <= 12
                     }; });
                 table.refreshColumns();
                 table.define('data', rowsAndCols.rows);
@@ -143,5 +163,16 @@ define([
         return contentsAsPromised.then(function() {
             webix.UIManager.setFocus(table);
         });
+    }
+
+    function compareDanishDates(key) {
+        return function(a, b) {
+            // Danish dates are backwards
+            var aParts = /^(\d+)-(\d+)-(\d+)$/.exec(a[key]) || [];
+            var bParts = /^(\d+)-(\d+)-(\d+)$/.exec(b[key]) || [];
+            var aa = aParts.slice(1).reverse().join('-');
+            var bb = bParts.slice(1).reverse().join('-');
+            return aa > bb ? 1 : (aa < bb ? -1 : 0);
+        };
     }
 });

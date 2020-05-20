@@ -13,8 +13,8 @@ define([
             .catch(function(reason) { return reason.response; });
     }
 
-    function fetchPerspective(perspective, asCsv) {
-        return basekit.fetchPerspective(perspective, asCsv)
+    function fetchPerspective(perspective, activationFilter) {
+        return basekit.fetchPerspective(perspective, activationFilter)
             .then(function(rows) {
                 var columns = {};
                 rows.forEach(function(row) {
@@ -40,7 +40,8 @@ define([
                 last.push(col);
             case col === 'AktivFra':
             case col === 'AktivTil':
-                return activeFromTo = [ 'AktivFra', 'AktivTil' ];
+                activeFromTo = [ 'AktivFra', 'AktivTil' ];
+                return false;
             default:
                 return true;
             }
