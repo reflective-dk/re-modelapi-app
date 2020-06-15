@@ -7,7 +7,7 @@ define([
     var modelMenu = new ModelMenu({
         getConfig: function() {
             // TODO: get config with call from service
-            let models = { ro: 'ro', mariadb: 'mariadb', camunda: 'camunda' };
+            let models = { ro: 'ro' };
             if (basekit.client.context.domain === 'aau') {
                 models.aau = 'aau';
             }
