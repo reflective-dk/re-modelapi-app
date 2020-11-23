@@ -9,7 +9,6 @@ define([
         employees: webix.uid().toString(),
         'role-assignments': webix.uid().toString(),
         'user-accounts': webix.uid().toString(),
-        'user-employments': webix.uid().toString(),
         rights: webix.uid().toString(),
         locations: webix.uid().toString()
     };
@@ -63,13 +62,6 @@ define([
                         { id: 'locations', header: 'Lokationer',
                           body: {
                               id: ids.locations,
-                              view: 'datatable',
-                              select: 'row',
-                              resizeColumn: true
-                          } },
-                        { id: 'user-employments', header: 'Brugeransættelser',
-                          body: {
-                              id: ids['user-employments'],
                               view: 'datatable',
                               select: 'row',
                               resizeColumn: true
@@ -150,8 +142,8 @@ define([
                 }
                 var filtered = rowsAndCols.columnNames
                     .filter(function(key) {
-                        // Leave out all id columns except 'EnhedEksterntId'
-                        return key === 'EnhedEksterntId' || !/id$/i.test(key);
+                        // Leave out all id columns except 'EksterntId' columns
+                        return !/id$/i.test(key) || /eksterntid$/i.test(key);
                     });
                 table.config.columns = filtered
                     .map(function(key) { return {
