@@ -9,6 +9,7 @@ define([
         employees: webix.uid().toString(),
         'role-assignments': webix.uid().toString(),
         'user-accounts': webix.uid().toString(),
+        'user-employments': webix.uid().toString(),
         rights: webix.uid().toString(),
         locations: webix.uid().toString()
     };
@@ -66,6 +67,13 @@ define([
                               select: 'row',
                               resizeColumn: true
                           } },
+                        { id: 'user-employments', header: 'Brugeransættelser',
+                          body: {
+                              id: ids['user-employments'],
+                              view: 'datatable',
+                              select: 'row',
+                              resizeColumn: true
+                          } }
                     ] },
                     { cols: [
                         {},
@@ -157,7 +165,9 @@ define([
                 table.define('data', rowsAndCols.rows);
             }).then(function() {
                 table.hideProgress();
-                table.select(table.getFirstId());
+                if (table.getFirstId()) {
+                  table.select(table.getFirstId());
+                }
             });
 
         return contentsAsPromised.then(function() {
