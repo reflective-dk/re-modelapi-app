@@ -49,7 +49,6 @@ define([
             } else {
                 situ.generateDiagram(modelId)
                     .then(function(def) {
-                        console.log(def);
                         if (def.length < 1000) {
                             //small diagram, reduce canvas
                             diagram.define({ template: '<div id="diagram" class="mermaid" style="width:300px;margin: 0 auto;">' + def + '</div>' });
