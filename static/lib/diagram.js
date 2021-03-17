@@ -22,7 +22,7 @@ define([ 'common/lodash.get' ], function (lodashGet) {
         });
         
       });
-      args.tables.forEach((table) => {
+      args.tables.forEach(function (table) {
         Object.keys(lodashGet(table, 'snapshot.columns', [])).forEach(function (columnKey) {
           let foreignKeys = Object.keys(lodashGet(table, 'snapshot.foreignKeys', {}));
           foreignKeys.forEach(function (foreignKey) {

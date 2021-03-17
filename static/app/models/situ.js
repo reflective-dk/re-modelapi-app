@@ -75,11 +75,15 @@ define([
             });
     }
 
+    function wrapName(name) {
+        return name.replace('-', '');
+    }
+    
     function pushLinesForClass(cls, lines) {
         var name = cls.snapshot.name;
         var labelsets = {};
         if (cls.snapshot.extends) {
-            lines.push(cls.snapshot.extends.name + ' <|-- ' + name);
+            lines.push(wrapName(cls.snapshot.extends.name) + ' <|-- ' + wrapName(name));
         }
         var relations = cls.snapshot.singleRelations || {};
         relations = Object.assign(relations, cls.snapshot.manyRelations || {});
@@ -89,14 +93,18 @@ define([
                 (labelsets[target.name] = labelsets[target.name] || []).push(k);
             });
         Object.keys(labelsets).forEach(function(targetName) {
-            lines.push(targetName + ' <-- ' + name + label(targetName, labelsets[targetName]));
+            lines.push(wrapName(targetName) + ' <-- ' + wrapName(name) + label(targetName, labelsets[targetName]));
         });
         var attributes = cls.snapshot.attributes || {};
         Object.keys(attributes)
             .forEach(function(k) {
                 var attribute = attributes[k];
-                var dataType = (typeof attribute.dataType === 'string') ? attribute.dataType : attribute.dataType.type;
-                lines.push(name + ' : ' + dataType.replace(/json/, 'string') + ' ' + k);
+                if (attribute.dataType) {
+                    var dataType = (typeof attribute.dataType === 'string') ? attribute.dataType : attribute.dataType.type;
+                    lines.push(wrapName(name) + ' : ' + dataType.replace(/json/, 'string') + ' ' + k);
+                } else {
+                    console.error('attribute without type', attribute, cls);
+                }
             });
         var collections = cls.snapshot.collections || {};
         Object.keys(collections)
@@ -104,7 +112,7 @@ define([
                 var collection = collections[k];
                 var dataType = (typeof collection.dataType === 'string') ? collection.dataType : collection.dataType.type;
                 dataType +=  '[]';
-                lines.push(name + ' : ' + dataType.replace(/json/, 'string') + ' ' + k);
+                lines.push(wrapName(name) + ' : ' + dataType.replace(/json/, 'string') + ' ' + k);
             });
     }
 
