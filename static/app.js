@@ -5,7 +5,6 @@ requirejs.config({
         commonViews: '../../common/views',
         dagre: '../js/dagre.min',
         app: '../app',
-        // webix: '//cdn.webix.com/5.4/webix'
         mermaid: '../shims/expose-mermaid',
         nomnoml: '../js/nomnoml',
         webix: '../../common/js/webix',

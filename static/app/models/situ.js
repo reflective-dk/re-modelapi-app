@@ -76,7 +76,7 @@ define([
     }
 
     function wrapName(name) {
-        return name.replace('-', '');
+        return name.replace(/-/g, '');
     }
     
     function pushLinesForClass(cls, lines) {
