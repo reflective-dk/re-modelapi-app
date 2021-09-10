@@ -60,6 +60,13 @@ define([
                         href: '#/app/perspectives?' + suffix,
                         icon: 'home'
                     }, 1);
+                    menu.add({
+                        value: 'Integrationer',
+                        id: self.ids.perspectives,
+                        // Cannot refer to child state in parent template (stateRouter.makePath())
+                        href: '#/app/integrations?' + suffix,
+                        icon: 'home'
+                    }, 2);
                     initCompleted.resolve(true);
                     return Object.keys(self.modelIds);
                 });

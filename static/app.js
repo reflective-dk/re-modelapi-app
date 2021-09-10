@@ -1,4 +1,5 @@
 requirejs.config({
+    urlArgs: 'build=$BUILD_NUM$',
     baseUrl: 'static/lib',
     paths: {
         common: '../../common/lib',

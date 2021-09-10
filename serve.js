@@ -1,13 +1,16 @@
+const fs = require('fs');
 const express = require('express');
 const request = require('request');
-var Client = require('re-client');
 var path = require('path');
+var Client = require('re-client');
 var serve_utils = require('re-common-app');
 const cookieParser = require('cookie-parser');
 
 var app = express();
 app.use(cookieParser());
+
 var indexpath = path.join(__dirname + '/static/index.html');
+var apppath = path.join(__dirname + '/static/app.js');
 
 function redirect (request, response, next) {
   if (request.url.endsWith('/app/modelapi')) {
@@ -37,6 +40,13 @@ if (process.argv.length === 4 && process.argv[2] === 'dev') {
   });
 } else {
   var staticConf = {maxAge: 360000 * 1000};
+  
+  app.get('/app/cluster/static/app.js', (request, response) => {
+    let appFile = fs.readFileSync(apppath);
+    appFile = appFile.toString().replace('$BUILD_NUM$', process.env['BUILD_NUM']);
+    response.send(appFile);
+  });
+
   app.use('/app/modelapi/static/', express.static('static', staticConf));
   app.use('/app/modelapi/common/', express.static('node_modules/re-common-app', staticConf));
 

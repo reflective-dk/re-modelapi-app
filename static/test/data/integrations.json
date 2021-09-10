@@ -1,0 +1,485 @@
+{
+  "objects": [
+    {
+      "id": "67502acd-3845-47bd-91f1-dfd5896f8b45",
+      "snapshot": {
+        "class": {
+          "id": "0b436737-7dbe-443d-9d73-d9240ce4b17e",
+          "name": "Integration Spec"
+        },
+        "name": "Bankdata Talentsoft Initial Integration Spec",
+        "tenant": {
+          "id": "2f9034b7-e419-431f-8804-8d321df93a97",
+          "name": "Bankdata"
+        },
+        "system": {
+          "id": "7fb950b8-2b31-423b-ab9f-3037d6b9e5ec",
+          "name": "Talentsoft"
+        },
+        "sources": {
+          "talentsoft": {
+            "id": "c4c2afcd-8005-4965-9dff-19d1f0af5acd"
+          }
+        },
+        "chain": "talentsoft-initial",
+        "metaChains": {
+          "fetch": "talentsoft-initial-fetch-meta",
+          "stage": "talentsoft-initial-stage-meta",
+          "incorporate": "talentsoft-initial-incorporate-meta"
+        },
+        "fetchers": {
+          "geographicUnits": {
+            "id": "faeeae80-75c5-4b63-bc20-061f117f7b4c",
+            "name": "Bankdata Talentsoft Geographic Unit Fetcher"
+          },
+          "regulationName": {
+            "id": "41a27318-7d97-4de2-b2b3-a4cd57f4dbd2",
+            "name": "Bankdata Talentsoft RegulationName Fetcher"
+          },
+          "regulationRegion": {
+            "id": "9971ac68-76d1-4278-a69e-38b59c110d1c",
+            "name": "Bankdata Talentsoft RegulationRegion Fetcher"
+          },
+          "workingTime": {
+            "id": "756a730f-e7f0-487d-9bad-686b54aca0e1",
+            "name": "Bankdata Talentsoft WorkingTime Fetcher"
+          },
+          "organizationalUnits": {
+            "id": "0c044a66-cc24-4336-a80b-e144b1359a48",
+            "name": "Bankdata Talentsoft Organizational Unit Fetcher"
+          },
+          "positions": {
+            "id": "928342f6-7e74-49c1-8441-11dd56a3c3b3",
+            "name": "Bankdata Talentsoft Positions Fetcher"
+          },
+          "employees": {
+            "id": "20e2d0e5-7b3c-4de2-bce1-3cf200880632",
+            "name": "Bankdata Talentsoft Initial Employees Static Fetcher"
+          }
+        },
+        "stagers": {
+          "geographicUnits": {
+            "id": "a2824e75-4b94-49de-bb46-aa9dedab2443",
+            "name": "Bankdata Talentsoft Geographic Unit Stager"
+          },
+          "regulationName": {
+            "id": "8e6a69a0-6443-433a-8e89-912c019bf95c",
+            "name": "Bankdata Talentsoft Regulation Name Stager"
+          },
+          "regulationRegion": {
+            "id": "472d829c-ebf1-4ecb-b297-1b4e1ecbac36",
+            "name": "Bankdata Talentsoft Regulation Rule Stager"
+          },
+          "workingTime": {
+            "id": "57a62fd2-2448-4e0f-b5ba-4655f9b2b28a",
+            "name": "Bankdata Talentsoft Working Time Stager"
+          },
+          "organizationalUnits": {
+            "id": "570502f1-7e72-4fb7-a1ed-b18f61573956",
+            "name": "Bankdata Talentsoft Organizational Unit Stager"
+          },
+          "positions": {
+            "id": "ca973af2-1ffa-41a4-8c1b-ae16f65bc5fe",
+            "name": "Bankdata Talentsoft Positions Stager"
+          },
+          "employees": {
+            "id": "7c4eea1c-d216-43b8-9c94-49b97120a344",
+            "name": "Bankdata Talentsoft Employee Stager"
+          }
+        },
+        "incorporation": {
+          "employment": {
+            "id": "e27ab62b-411f-4783-8b90-6afd5e1f1c4c",
+            "name": "Talentsoft Situation -> RO Employment"
+          },
+          "person": {
+            "id": "57587a73-1e52-4820-90a3-34a3b251a319",
+            "name": "Talentsoft Employee -> RO Person"
+          },
+          "situationLeder": {
+            "id": "ae7e5f3e-212e-4aa0-9282-42396465bb68",
+            "name": "Talentsoft Situation -> Leder"
+          },
+          "organizationalUnits": {
+            "id": "bba7e122-53b3-4969-96a9-aa4bcb318205",
+            "name": "Talentsoft Organizational Unit -> Unit"
+          },
+          "positions": {
+            "id": "8fbfb10f-0821-4c6f-b405-35beeb77824b",
+            "name": "Talentsoft Position -> Position"
+          },
+          "regulationName": {
+            "id": "ca23d4ba-e33f-44c4-9881-981bb3b7b83d",
+            "name": "Talentsoft Regulation Name -> Team"
+          },
+          "address": {
+            "id": "bca6097b-c4fd-4c28-b794-227a9a423e8d",
+            "name": "Talentsoft Employee -> RO Address"
+          },
+          "location": {
+            "id": "4f53fc5a-de6f-4083-8946-84829cd7821f",
+            "name": "Talentsoft Geographic Organisation Unit -> RO Location"
+          }
+        }
+      },
+      "regcount": 1,
+      "from": "2021-03-17T09:44:10.818Z",
+      "context": {
+        "validOn": "2021-03-17T13:25:58.913Z",
+        "knownOn": "2021-03-17T13:25:58.913Z",
+        "domain": "bankdata"
+      },
+      "registration": {
+        "id": "4bf18020-d70a-4f1b-a9ef-ce307cec85eb",
+        "timestamp": "2021-03-17T09:44:10.818Z"
+      }
+    },
+    {
+      "id": "33044bd6-e8be-4105-8314-38c570a351f2",
+      "snapshot": {
+        "class": {
+          "id": "0b436737-7dbe-443d-9d73-d9240ce4b17e",
+          "name": "Integration Spec"
+        },
+        "name": "Bankdata Talentsoft Initial Integration Spec",
+        "tenant": {
+          "id": "2f9034b7-e419-431f-8804-8d321df93a97",
+          "name": "Bankdata"
+        },
+        "system": {
+          "id": "7fb950b8-2b31-423b-ab9f-3037d6b9e5ec",
+          "name": "Talentsoft"
+        },
+        "sources": {
+          "talentsoft": {
+            "id": "c4c2afcd-8005-4965-9dff-19d1f0af5acd"
+          }
+        },
+        "chain": "talentsoft-initial",
+        "metaChains": {
+          "fetch": "talentsoft-test-initial-fetch-meta",
+          "stage": "talentsoft-test-initial-stage-meta",
+          "incorporate": "talentsoft-test-initial-incorporate-meta"
+        },
+        "fetchers": {
+          "geographicUnits": {
+            "id": "7de778d6-1982-430c-8fd7-94279492b08d",
+            "name": "Bankdata Talentsoft Geographic Unit Fetcher"
+          },
+          "regulationName": {
+            "id": "201b6130-363e-445e-a72d-d5d015db6727",
+            "name": "Bankdata Talentsoft RegulationName Fetcher"
+          },
+          "regulationRegion": {
+            "id": "d7ab0c4d-5868-4719-a337-5cb0ac18743f",
+            "name": "Bankdata Talentsoft RegulationRegion Fetcher"
+          },
+          "workingTime": {
+            "id": "b66e5733-604a-48e3-b163-fee8b0678cea",
+            "name": "Bankdata Talentsoft WorkingTime Fetcher"
+          },
+          "organizationalUnits": {
+            "id": "fdc596e8-988b-4ddf-a5b6-3024737c9287",
+            "name": "Bankdata Talentsoft Organizational Unit Fetcher"
+          },
+          "positions": {
+            "id": "7ec7ff1a-018e-4be1-b2fa-3607ededf876",
+            "name": "Bankdata Talentsoft Positions Fetcher"
+          },
+          "employees": {
+            "id": "7751d548-22f5-4194-9933-6ec357acd4c8",
+            "name": "Bankdata Talentsoft Initial Employees Static Fetcher"
+          }
+        },
+        "stagers": {
+          "geographicUnits": {
+            "id": "a2824e75-4b94-49de-bb46-aa9dedab2443",
+            "name": "Bankdata Talentsoft Geographic Unit Stager"
+          },
+          "regulationName": {
+            "id": "8e6a69a0-6443-433a-8e89-912c019bf95c",
+            "name": "Bankdata Talentsoft Regulation Name Stager"
+          },
+          "regulationRegion": {
+            "id": "472d829c-ebf1-4ecb-b297-1b4e1ecbac36",
+            "name": "Bankdata Talentsoft Regulation Rule Stager"
+          },
+          "workingTime": {
+            "id": "57a62fd2-2448-4e0f-b5ba-4655f9b2b28a",
+            "name": "Bankdata Talentsoft Working Time Stager"
+          },
+          "organizationalUnits": {
+            "id": "570502f1-7e72-4fb7-a1ed-b18f61573956",
+            "name": "Bankdata Talentsoft Organizational Unit Stager"
+          },
+          "positions": {
+            "id": "ca973af2-1ffa-41a4-8c1b-ae16f65bc5fe",
+            "name": "Bankdata Talentsoft Positions Stager"
+          },
+          "employees": {
+            "id": "7c4eea1c-d216-43b8-9c94-49b97120a344",
+            "name": "Bankdata Talentsoft Employee Stager"
+          }
+        },
+        "incorporation": {
+          "employment": {
+            "id": "e27ab62b-411f-4783-8b90-6afd5e1f1c4c",
+            "name": "Talentsoft Situation -> RO Employment"
+          },
+          "person": {
+            "id": "57587a73-1e52-4820-90a3-34a3b251a319",
+            "name": "Talentsoft Employee -> RO Person"
+          },
+          "situationLeder": {
+            "id": "ae7e5f3e-212e-4aa0-9282-42396465bb68",
+            "name": "Talentsoft Situation -> Leder"
+          },
+          "organizationalUnits": {
+            "id": "bba7e122-53b3-4969-96a9-aa4bcb318205",
+            "name": "Talentsoft Organizational Unit -> Unit"
+          },
+          "positions": {
+            "id": "8fbfb10f-0821-4c6f-b405-35beeb77824b",
+            "name": "Talentsoft Position -> Position"
+          },
+          "regulationName": {
+            "id": "ca23d4ba-e33f-44c4-9881-981bb3b7b83d",
+            "name": "Talentsoft Regulation Name -> Team"
+          },
+          "address": {
+            "id": "bca6097b-c4fd-4c28-b794-227a9a423e8d",
+            "name": "Talentsoft Employee -> RO Address"
+          },
+          "location": {
+            "id": "4f53fc5a-de6f-4083-8946-84829cd7821f",
+            "name": "Talentsoft Geographic Organisation Unit -> RO Location"
+          }
+        }
+      },
+      "regcount": 1,
+      "from": "2021-03-17T09:44:10.818Z",
+      "context": {
+        "validOn": "2021-03-17T13:25:58.913Z",
+        "knownOn": "2021-03-17T13:25:58.913Z",
+        "domain": "bankdata"
+      },
+      "registration": {
+        "id": "a9913614-b5a3-4bea-abd2-e1ad4869e853",
+        "timestamp": "2021-03-17T09:44:10.818Z"
+      }
+    },
+    {
+      "id": "459d6f13-97c5-43ae-b788-5e59ea6f97af",
+      "snapshot": {
+        "class": {
+          "id": "0b436737-7dbe-443d-9d73-d9240ce4b17e",
+          "name": "Integration Spec"
+        },
+        "name": "Bankdata Talentsoft Integration Spec",
+        "tenant": {
+          "id": "2f9034b7-e419-431f-8804-8d321df93a97",
+          "name": "Bankdata"
+        },
+        "system": {
+          "id": "7fb950b8-2b31-423b-ab9f-3037d6b9e5ec",
+          "name": "Talentsoft"
+        },
+        "sources": {
+          "talentsoft": {
+            "id": "c4c2afcd-8005-4965-9dff-19d1f0af5acd"
+          }
+        },
+        "process": {
+          "id": "2d2f1009-6f64-4a7b-958c-c7bf06c5f511",
+          "name": "Bankdata Talentsoft import"
+        },
+        "chain": "talentsoft",
+        "metaChains": {
+          "fetch": "talentsoft-fetch-meta",
+          "stage": "talentsoft-stage-meta",
+          "incorporate": "talentsoft-incorporate-meta"
+        },
+        "fetchers": {
+          "positionsLog": {
+            "id": "eaae20c9-32c0-4fd7-a89b-cc942b59bccb",
+            "name": "Bankdata Talentsoft Positions Log Fetcher"
+          },
+          "employeeLog": {
+            "id": "bbccbeb4-bd61-4364-96f0-673517244645",
+            "name": "Bankdata Talentsoft Employee Log Fetcher"
+          },
+          "libraryLog": {
+            "id": "df302f3c-914a-4066-9b1c-ebdbfc0f6186",
+            "name": "Bankdata Talentsoft Library Log Fetcher"
+          }
+        },
+        "stagers": {
+          "positionsLog": {
+            "id": "ca973af2-1ffa-41a4-8c1b-ae16f65bc5fe",
+            "name": "Bankdata Talentsoft Positions Log Stager"
+          },
+          "employeeLog": {
+            "id": "7c4eea1c-d216-43b8-9c94-49b97120a344",
+            "name": "Bankdata Talentsoft Employee Log Stager"
+          },
+          "libraryLog": {
+            "id": "e66691a3-4fae-4d80-9c5a-e98fc81c4c75",
+            "name": "Bankdata Talentsoft Library Log Stager"
+          }
+        },
+        "incorporation": {
+          "employment": {
+            "id": "e27ab62b-411f-4783-8b90-6afd5e1f1c4c",
+            "name": "Talentsoft Situation -> RO Employment"
+          },
+          "person": {
+            "id": "57587a73-1e52-4820-90a3-34a3b251a319",
+            "name": "Talentsoft Employee -> RO Person"
+          },
+          "situationLeder": {
+            "id": "ae7e5f3e-212e-4aa0-9282-42396465bb68",
+            "name": "Talentsoft Situation -> Leder"
+          },
+          "organizationalUnits": {
+            "id": "bba7e122-53b3-4969-96a9-aa4bcb318205",
+            "name": "Talentsoft Organizational Unit -> Unit"
+          },
+          "positions": {
+            "id": "8fbfb10f-0821-4c6f-b405-35beeb77824b",
+            "name": "Talentsoft Position -> Position"
+          },
+          "regulationName": {
+            "id": "ca23d4ba-e33f-44c4-9881-981bb3b7b83d",
+            "name": "Talentsoft Regulation Name -> Team"
+          },
+          "address": {
+            "id": "bca6097b-c4fd-4c28-b794-227a9a423e8d",
+            "name": "Talentsoft Employee -> RO Address"
+          },
+          "location": {
+            "id": "4f53fc5a-de6f-4083-8946-84829cd7821f",
+            "name": "Talentsoft Geographic Organisation Unit -> RO Location"
+          }
+        }
+      },
+      "regcount": 1,
+      "from": "2021-03-17T09:44:10.818Z",
+      "context": {
+        "validOn": "2021-03-17T13:25:58.913Z",
+        "knownOn": "2021-03-17T13:25:58.913Z",
+        "domain": "bankdata"
+      },
+      "registration": {
+        "id": "55b3b7a0-f5f0-425a-b785-43697e55021d",
+        "timestamp": "2021-03-17T09:44:10.818Z"
+      }
+    },
+    {
+      "id": "444005c2-9b53-4ac3-8a4b-2b7b1cf1fc65",
+      "snapshot": {
+        "class": {
+          "id": "0b436737-7dbe-443d-9d73-d9240ce4b17e",
+          "name": "Integration Spec"
+        },
+        "name": "Bankdata Talentsoft Integration Spec",
+        "tenant": {
+          "id": "2f9034b7-e419-431f-8804-8d321df93a97",
+          "name": "Bankdata"
+        },
+        "system": {
+          "id": "7fb950b8-2b31-423b-ab9f-3037d6b9e5ec",
+          "name": "Talentsoft"
+        },
+        "sources": {
+          "talentsoft": {
+            "id": "c4c2afcd-8005-4965-9dff-19d1f0af5acd"
+          }
+        },
+        "process": {
+          "id": "2d2f1009-6f64-4a7b-958c-c7bf06c5f511",
+          "name": "Bankdata Talentsoft import"
+        },
+        "chain": "talentsoft",
+        "metaChains": {
+          "fetch": "talentsoft-test-fetch-meta",
+          "stage": "talentsoft-test-stage-meta",
+          "incorporate": "talentsoft-test-incorporate-meta"
+        },
+        "fetchers": {
+          "positionsLog": {
+            "id": "eaae20c9-32c0-4fd7-a89b-cc942b59bccb",
+            "name": "Bankdata Talentsoft Positions Log Fetcher"
+          },
+          "employeeLog": {
+            "id": "bbccbeb4-bd61-4364-96f0-673517244645",
+            "name": "Bankdata Talentsoft Employee Log Fetcher"
+          },
+          "libraryLog": {
+            "id": "df302f3c-914a-4066-9b1c-ebdbfc0f6186",
+            "name": "Bankdata Talentsoft Library Log Fetcher"
+          }
+        },
+        "stagers": {
+          "positionsLog": {
+            "id": "ca973af2-1ffa-41a4-8c1b-ae16f65bc5fe",
+            "name": "Bankdata Talentsoft Positions Log Stager"
+          },
+          "employeeLog": {
+            "id": "7c4eea1c-d216-43b8-9c94-49b97120a344",
+            "name": "Bankdata Talentsoft Employee Log Stager"
+          },
+          "libraryLog": {
+            "id": "e66691a3-4fae-4d80-9c5a-e98fc81c4c75",
+            "name": "Bankdata Talentsoft Library Log Stager"
+          }
+        },
+        "incorporation": {
+          "employment": {
+            "id": "e27ab62b-411f-4783-8b90-6afd5e1f1c4c",
+            "name": "Talentsoft Situation -> RO Employment"
+          },
+          "person": {
+            "id": "57587a73-1e52-4820-90a3-34a3b251a319",
+            "name": "Talentsoft Employee -> RO Person"
+          },
+          "situationLeder": {
+            "id": "ae7e5f3e-212e-4aa0-9282-42396465bb68",
+            "name": "Talentsoft Situation -> Leder"
+          },
+          "organizationalUnits": {
+            "id": "bba7e122-53b3-4969-96a9-aa4bcb318205",
+            "name": "Talentsoft Organizational Unit -> Unit"
+          },
+          "positions": {
+            "id": "8fbfb10f-0821-4c6f-b405-35beeb77824b",
+            "name": "Talentsoft Position -> Position"
+          },
+          "regulationName": {
+            "id": "ca23d4ba-e33f-44c4-9881-981bb3b7b83d",
+            "name": "Talentsoft Regulation Name -> Team"
+          },
+          "address": {
+            "id": "bca6097b-c4fd-4c28-b794-227a9a423e8d",
+            "name": "Talentsoft Employee -> RO Address"
+          },
+          "location": {
+            "id": "4f53fc5a-de6f-4083-8946-84829cd7821f",
+            "name": "Talentsoft Geographic Organisation Unit -> RO Location"
+          }
+        }
+      },
+      "regcount": 1,
+      "from": "2021-03-17T09:44:10.818Z",
+      "context": {
+        "validOn": "2021-03-17T13:25:58.913Z",
+        "knownOn": "2021-03-17T13:25:58.913Z",
+        "domain": "bankdata"
+      },
+      "registration": {
+        "id": "35e5bf7b-31e0-4eca-ab74-cc516d1cb9b4",
+        "timestamp": "2021-03-17T09:44:10.818Z"
+      }
+    }
+  ],
+  "total": 4
+}
