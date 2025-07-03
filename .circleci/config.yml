@@ -15,11 +15,11 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            gcloud docker -- build -t gcr.io/city-7337/modelapi-app .
+            gcloud docker -- build -t eu.gcr.io/city-7337/modelapi-app .
       - run:
           name: Run modelapi-app
           command: |
-            gcloud docker -- run --name modelapi-app -d -p 8080:8080 gcr.io/city-7337/modelapi-app
+            gcloud docker -- run --name modelapi-app -d -p 8080:8080 eu.gcr.io/city-7337/modelapi-app
       - run:
           name: Check running
           command: |
@@ -28,6 +28,6 @@ jobs:
           name: Push and tag application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              gcloud docker -- push gcr.io/city-7337/modelapi-app
-              gcloud -q container images add-tag gcr.io/city-7337/modelapi-app:latest gcr.io/city-7337/modelapi-app:build_$CIRCLE_BUILD_NUM
+              gcloud docker -- push eu.gcr.io/city-7337/modelapi-app
+              gcloud -q container images add-tag eu.gcr.io/city-7337/modelapi-app:latest eu.gcr.io/city-7337/modelapi-app:build_$CIRCLE_BUILD_NUM
             fi
