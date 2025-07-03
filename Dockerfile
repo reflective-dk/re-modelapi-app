@@ -1,4 +1,4 @@
-FROM gcr.io/city-7337/base
+FROM eu.gcr.io/city-7337/base:node-12.15.0
 
 ADD package.json package.json
 ADD serve.js serve.js
